@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.fragmentprova.utility.AbbinaColori;
+import com.example.fragmentprova.utility.Preferenze;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -121,7 +122,7 @@ public class DBAdapterLogin {
         close();
     }
 
-    ArrayList<Vestito> getVestiti(String outfit){
+    ArrayList<Vestito> getVestiti(String outfit, Preferenze prefer){
         open();
         Cursor cursor = database.query(DBHelper.TABLE_OUTFIT, new String[]{"ID"}, "NOME" + "=?",
                 new String[]{outfit},null,null,null,null);
@@ -223,7 +224,7 @@ public class DBAdapterLogin {
                 boolean abb = false;
                 boolean disp = false;
                 boolean ripie = false;
-                boolean pref = false;
+                boolean pref = prefer.isEccentric();
 
                 if(eccentrici.size()>0 && pref)
                     ecc = true;
