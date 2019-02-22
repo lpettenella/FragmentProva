@@ -34,7 +34,7 @@ public class ColourSelectorAdapter extends ArrayAdapter<RowItem> {
         }
         RowItem rowItem = getItem(position);
         TextView txtTitle = (TextView) convertView.findViewById(R.id.colour);
-        txtTitle.setText(rowItem.getTitle());
+        txtTitle.setText(rowItem.getImageName());
         ImageView imageView = (ImageView) convertView.findViewById(R.id.colourImage);
         imageView.setImageResource(rowItem.getImageId());
         return convertView;
@@ -65,7 +65,7 @@ public class ColourSelectorAdapter extends ArrayAdapter<RowItem> {
             holder = (viewHolder) rowview.getTag();
         }
         holder.imageView.setImageResource(rowItem.getImageId());
-        holder.txtTitle.setText(rowItem.getTitle());
+        holder.txtTitle.setText(rowItem.getImageId());
 
         return rowview;
     }

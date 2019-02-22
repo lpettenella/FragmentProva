@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/backgrey">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/up_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+    </android.support.v7.widget.RecyclerView>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="120dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="COLOR"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="135dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/upspinner">
+    </Spinner>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="215dp"
+        android:button="@drawable/checkboxusual"
+        android:src="@drawable/usualbutton" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="214dp"
+        android:button="@drawable/checkboxcasual"
+        android:src="@drawable/casualbutton" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="213dp"
+        android:button="@drawable/checkboxformal"
+        android:src="@drawable/formalbutton" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="195dp"
+        android:layout_marginTop="214dp"
+        android:button="@drawable/checkboxelegant"
+        android:src="@drawable/elegantbutton" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="260dp"
+        android:background="?android:attr/listDivider" />
+
+
+</RelativeLayout>

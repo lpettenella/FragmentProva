@@ -3,36 +3,31 @@ package com.example.fragmentprova;
 public class RowItem {
 
     private int ImageId;
-    private String Title;
+    private String ImageName;
 
-    public RowItem(String Title,int ImageId){
-
-        this.Title = Title;
-        this.ImageId = ImageId;
+    public RowItem(int imageId, String imageName) {
+        this.ImageId = imageId;
+        this.ImageName = imageName;
     }
 
-    public String getTitle(){
-
-        return Title;
-    }
-
-    public void setTitle(String Title){
-
-        this.Title = Title;
-    }
-
-    public int getImageId(){
-
+    public int getImageId() {
         return ImageId;
     }
 
-    public void setImageId(int ImageId){
+    public String getImageName() {
+        return ImageName;
+    }
 
-        this.ImageId = ImageId;
+    public void setImageId(int imageId) {
+        this.ImageId = imageId;
+    }
+
+    public void setImageName(String imageName) {
+        this.ImageName = imageName;
     }
 
     @Override
     public String toString() {
-        return Title ;
+        return ImageName;
     }
 }

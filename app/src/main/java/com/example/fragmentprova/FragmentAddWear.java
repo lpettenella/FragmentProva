@@ -1,30 +1,39 @@
 package com.example.fragmentprova;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 
-public class FragmentAddWear extends FragmentActivity {
+public class FragmentAddWear extends Fragment {
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_wear, null);
+
+        final TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        final ViewPager viewPager = view.findViewById(R.id.container_addWear);
+        final ViewPagerAdapterFragment adapterFragment = new ViewPagerAdapterFragment(getChildFragmentManager());
+
+        adapterFragment.AddFragment(new FragmentTop(), "TOP");
+        adapterFragment.AddFragment(new FragmentUp(), "UP");
+        adapterFragment.AddFragment(new FragmentDown(), "DOWN");
+        viewPager.setAdapter(adapterFragment);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.falpa_cappuccio_tascone);
+        tabLayout.getTabAt(1).setIcon(R.drawable.tshirt_taschino);
+        tabLayout.getTabAt(2).setIcon(R.drawable.pantaloni_sigaretta_tasconi);
+
+
+        return view;
+    }
 }

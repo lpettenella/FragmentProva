@@ -27,8 +27,7 @@ public class FragmentTwo extends Fragment {
         btnAddWear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent firstpage= new Intent(getActivity(),FragmentAddWear.class);
-                getActivity().startActivity(firstpage);
+                getFragmentManager().beginTransaction().replace(R.id.container, new FragmentAddWear()).commit();
             }
         });
 
