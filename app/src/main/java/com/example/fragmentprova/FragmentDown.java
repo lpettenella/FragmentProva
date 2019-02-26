@@ -20,12 +20,13 @@ public class FragmentDown extends Fragment {
 
     private RecyclerView myRecyclerViewDown;
     private List<Down> lstDown;
+    private Vestito vestito;
 
-    public static final String[] titles = new String[] {"Apricot", "AshGray", "Azure", "Beige", "Black", "Blue", "BlueGray", "BlueJeans",
-            "BottleGreen", "Celeste", "Coral", "DarkGreen", "Gold", "Gray", "Green",
-            "GreenBlue", "Lavender", "LightBlue", "Magenta", "MidnightBlue", "MintGreen",
-            "NavyBlue", "OceanBlue", "OceanGreen", "Olive", "Orange", "Pink", "Red", "Rose",
-            "Sand", "Scarlet", "Silver", "Tangerine", "Turquoise", "Violet", "White", "Yellow"};
+    public static final String[] titles = new String[] {"apricot", "ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
+            "bottlegreen", "celeste", "coral", "darkGreen", "gold", "gray", "green",
+            "greenblue", "lavender", "lightblue", "magenta", "midnightblue", "mintgreen",
+            "navyblue", "oceanBlue", "oceanGreen", "olive", "orange", "pink", "red", "rose",
+            "sand", "scarlet", "silver", "tangerine", "turquoise", "violet", "white", "yellow"};
 
     public static final Integer[] images = {
             R.drawable.apricot, R.drawable.ashgray, R.drawable.azure, R.drawable.beige,
@@ -47,6 +48,8 @@ public class FragmentDown extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.down_fragment, null);
 
+        vestito = new Vestito();
+
         myRecyclerViewDown = (RecyclerView) view.findViewById( R.id.down_recyclerview );
         RecyclerViewAdapterDown recyclerViewAdapterDown = new RecyclerViewAdapterDown( getContext(), lstDown );
         myRecyclerViewDown.setLayoutManager( new LinearLayoutManager( getActivity() ) );
@@ -56,6 +59,7 @@ public class FragmentDown extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
+                vestito.setTipoVestito(Integer.toString(201+position));
             }
 
             @Override
@@ -81,6 +85,7 @@ public class FragmentDown extends Fragment {
 
                 String itemvalue = parent.getItemAtPosition( position ).toString();
                 Toast.makeText( getActivity(), "SELECTED" + itemvalue, Toast.LENGTH_SHORT ).show();
+                vestito.setColore(itemvalue);
             }
 
             @Override

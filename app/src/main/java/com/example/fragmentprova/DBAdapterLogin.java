@@ -174,7 +174,7 @@ public class DBAdapterLogin {
                 for(int i=0; i<sopra.size(); i++){
                     sopr[i] = sopra.get(i);
                 }
-                Cursor cursor5 = database.rawQuery(selectQuery3, new String[]{"1", "2"});
+                Cursor cursor5 = database.rawQuery(selectQuery3, sopr);
 
                 if(cursor5.moveToFirst()) {
                     do {
@@ -186,10 +186,10 @@ public class DBAdapterLogin {
                         v.setTipoVestito(cursor5.getString(5));
                         v.setPic_tag(Integer.parseInt(cursor5.getString(7)));
 
-                        if(cursor5.getString(5).equals("1")) {
+                        if(cursor5.getString(5).equals("112")) {
                             parteSopra.add(v);
                         }
-                        else if(cursor5.getString(5).equals("2")){
+                        else if(cursor5.getString(5).equals("203")){
                             parteSotto.add(v);
                         }
                     } while (cursor5.moveToNext());

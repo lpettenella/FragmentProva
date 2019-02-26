@@ -20,12 +20,13 @@ public class FragmentTop extends Fragment {
 
     private RecyclerView myRecyclerView;
     private List<Top> lstTop;
+    private Vestito vestito;
 
-    public static final String[] titles = new String[] {"Apricot", "AshGray", "Azure", "Beige", "Black", "Blue", "BlueGray", "BlueJeans",
-            "BottleGreen", "Celeste", "Coral", "DarkGreen", "Gold", "Gray", "Green",
-            "GreenBlue", "Lavender", "LightBlue", "Magenta", "MidnightBlue", "MintGreen",
-            "NavyBlue", "OceanBlue", "OceanGreen", "Olive", "Orange", "Pink", "Red", "Rose",
-            "Sand", "Scarlet", "Silver", "Tangerine", "Turquoise", "Violet", "White", "Yellow"};
+    public static final String[] titles = new String[] {"apricot", "ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
+            "bottlegreen", "celeste", "coral", "darkGreen", "gold", "gray", "green",
+            "greenblue", "lavender", "lightblue", "magenta", "midnightblue", "mintgreen",
+            "navyblue", "oceanBlue", "oceanGreen", "olive", "orange", "pink", "red", "rose",
+            "sand", "scarlet", "silver", "tangerine", "turquoise", "violet", "white", "yellow"};
 
     public static final Integer[] images = {
             R.drawable.apricot, R.drawable.ashgray, R.drawable.azure, R.drawable.beige,
@@ -47,6 +48,10 @@ public class FragmentTop extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.top_fragment, null);
 
+        vestito = new Vestito();
+        vestito.setNome("Vestito");
+        vestito.setDisponibile("1");
+
         myRecyclerView = (RecyclerView) view.findViewById(R.id.top_recyclerview);
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), lstTop);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -56,6 +61,8 @@ public class FragmentTop extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
+                vestito.setTipoVestito(Integer.toString(position+1));
+                vestito.setPic_tag(lstTop.get(position).getModelImage());
             }
 
             @Override
@@ -81,6 +88,7 @@ public class FragmentTop extends Fragment {
 
                 String itemvalue = parent.getItemAtPosition( position ).toString();
                 Toast.makeText( getActivity(), "SELECTED" + itemvalue, Toast.LENGTH_SHORT ).show();
+                vestito.setColore(itemvalue);
             }
 
             @Override

@@ -22,12 +22,13 @@ public class FragmentUp extends Fragment {
 
     private RecyclerView myRecyclerViewUp;
     private List<Up> lstUp;
+    private Vestito vestito;
 
-    public static final String[] titles = new String[] {"Apricot", "AshGray", "Azure", "Beige", "Black", "Blue", "BlueGray", "BlueJeans",
-            "BottleGreen", "Celeste", "Coral", "DarkGreen", "Gold", "Gray", "Green",
-            "GreenBlue", "Lavender", "LightBlue", "Magenta", "MidnightBlue", "MintGreen",
-            "NavyBlue", "OceanBlue", "OceanGreen", "Olive", "Orange", "Pink", "Red", "Rose",
-            "Sand", "Scarlet", "Silver", "Tangerine", "Turquoise", "Violet", "White", "Yellow"};
+    public static final String[] titles = new String[] {"apricot", "ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
+            "bottlegreen", "celeste", "coral", "darkGreen", "gold", "gray", "green",
+            "greenblue", "lavender", "lightblue", "magenta", "midnightblue", "mintgreen",
+            "navyblue", "oceanBlue", "oceanGreen", "olive", "orange", "pink", "red", "rose",
+            "sand", "scarlet", "silver", "tangerine", "turquoise", "violet", "white", "yellow"};
 
     public static final Integer[] images = {
             R.drawable.apricot, R.drawable.ashgray, R.drawable.azure, R.drawable.beige,
@@ -49,6 +50,8 @@ public class FragmentUp extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.up_fragment, null);
 
+        vestito = new Vestito();
+
         myRecyclerViewUp = (RecyclerView) view.findViewById( R.id.up_recyclerview );
         RecyclerViewAdapterUp recyclerViewAdapterUp = new RecyclerViewAdapterUp( getContext(), lstUp );
         myRecyclerViewUp.setLayoutManager( new LinearLayoutManager( getActivity() ) );
@@ -58,6 +61,7 @@ public class FragmentUp extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
+                vestito.setTipoVestito(Integer.toString(101+position));
             }
 
             @Override
@@ -83,6 +87,7 @@ public class FragmentUp extends Fragment {
 
                 String itemvalue = parent.getItemAtPosition( position ).toString();
                 Toast.makeText( getActivity(), "SELECTED" + itemvalue, Toast.LENGTH_SHORT ).show();
+                vestito.setColore(itemvalue);
             }
 
             @Override
