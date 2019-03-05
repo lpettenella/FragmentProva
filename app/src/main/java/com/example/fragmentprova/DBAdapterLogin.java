@@ -123,12 +123,20 @@ public class DBAdapterLogin {
     }
 
     ArrayList<Vestito> getVestiti(String outfit, Preferenze prefer){
+        int temperatura = 0;
         open();
-        Cursor cursor = database.query(DBHelper.TABLE_OUTFIT, new String[]{"ID"}, "NOME" + "=?",
+        Cursor cursor = database.query(DBHelper.TABLE_OUTFIT, new String[]{"ID","TEMPERATURA","TEMPERATURAMASSIMA"}, "NOME" + "=?",
                 new String[]{outfit},null,null,null,null);
-        if(cursor!=null)
-            cursor.moveToFirst();
-        int id_out = Integer.parseInt(cursor.getString(0));
+        int id_out = 1;
+
+        if(cursor.moveToFirst()){
+            do{
+                if(temperatura >= Integer.parseInt(cursor.getString(1)) && temperatura <= Integer.parseInt(cursor.getString(2))) {
+                    id_out = Integer.parseInt(cursor.getString(0));
+                    break;
+                }
+            }while (cursor.moveToNext());
+        }
 
         Cursor cursor2 = database.query(DBHelper.TABLE_OUTFIT, new String[]{"TIPOOUTFIT_ID"}, "OUTFITPRINCIPALE_ID" + "=?",
                 new String[]{String.valueOf(id_out)},null,null,null,null);
@@ -186,10 +194,10 @@ public class DBAdapterLogin {
                         v.setTipoVestito(cursor5.getString(5));
                         v.setPic_tag(Integer.parseInt(cursor5.getString(7)));
 
-                        if(cursor5.getString(5).equals("112")) {
+                        if(sopra.contains(cursor5.getString(5)) && Integer.parseInt(cursor5.getString(5))<200) {
                             parteSopra.add(v);
                         }
-                        else if(cursor5.getString(5).equals("203")){
+                        else if(sopra.contains(cursor5.getString(5)) && Integer.parseInt(cursor5.getString(5))>=200){
                             parteSotto.add(v);
                         }
                     } while (cursor5.moveToNext());

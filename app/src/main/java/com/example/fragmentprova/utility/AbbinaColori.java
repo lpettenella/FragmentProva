@@ -5,9 +5,14 @@ public class AbbinaColori {
 
     private ArrayList<String> colori;
     private String nome;
-    private String[] coloriCaldi = {"rosso","arancione","giallo", "rosso", "magenta", "magenta", "rosa", "marrone", "jeans", "grigio"};
-    private String[] coloriFreddi = {"verde chiaro", "verde", "blu", "azzurro", "jeans", "viola", "fucsia", "grigio"};
-    private String[] primari = {"giallo", "blu", "rosso"};
+    private String[] coloriCaldi = {"apricot", "beige", "black", "bluejeans",
+            "coral", "darkGreen", "gold", "magenta", "olive", "orange", "pink", "red", "rose",
+            "sand", "scarlet", "silver", "tangerine", "white", "yellow"};
+    private String[] coloriFreddi = {"ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
+            "bottlegreen", "celeste", "darkGreen", "gray", "green",
+            "greenblue", "lavender", "lightblue", "midnightblue", "mintgreen",
+            "navyblue", "oceanBlue", "oceanGreen", "silver", "turquoise", "violet", "white"};
+    private String[] primari = {"red", "blue", "yellow"};
     private boolean eccentric;
 
     //il parametro nome si riferisce al nome di tipo di outfit
@@ -43,9 +48,9 @@ public class AbbinaColori {
         if(col1.equals(col2))
             return false;
         else if(eccentric) {
-            if((col1.equals("rosso") && col2.equals("verde"))||((col1.equals("verde") && col2.equals("rosso"))) ||
-                    (col1.equals("giallo") && col2.equals("viola"))||((col1.equals("viola") && col2.equals("giallo"))) ||
-                    (col1.equals("blu") && col2.equals("arancione"))||((col1.equals("arancione") && col2.equals("blu")))) {
+            if((col1.equals("red") && col2.equals("green"))||((col1.equals("green") && col2.equals("red"))) ||
+                    (col1.equals("yellow") && col2.equals("purple"))||((col1.equals("purple") && col2.equals("yellow"))) ||
+                    (col1.equals("blue") && col2.equals("orange"))||((col1.equals("orange") && col2.equals("blue")))) {
                 return true;
             }
             return false;

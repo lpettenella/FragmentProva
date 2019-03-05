@@ -1,12 +1,29 @@
 package com.example.fragmentprova;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Top {
 
     private int modelImage;
-    private List<Integer> lstTop;
-    private List<Integer> typeTop;
+    private List<Integer> lstTop = new ArrayList<Integer>();
+    private List<Integer> typeTop = new ArrayList<Integer>();
+
+    public List<Integer> getLstTop() {
+        return lstTop;
+    }
+
+    public void setLstTop(List<Integer> lstTop) {
+        this.lstTop = lstTop;
+    }
+
+    public List<Integer> getTypeTop() {
+        return typeTop;
+    }
+
+    public void setTypeTop(List<Integer> typeTop) {
+        this.typeTop = typeTop;
+    }
 
     public Top() {
         lstTop.add(R.drawable.cardigan);

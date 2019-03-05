@@ -37,14 +37,15 @@ public class FragmentOne extends Fragment{
         final Preferenze pref = new Preferenze();
         final Up up = new Up();
         final Down down = new Down();
+        final Top top = new Top();
 
         imageView = view.findViewById(R.id.imageView);
         imageView2 = view.findViewById(R.id.imageView2);
 
         int asd = view.getContext().getResources().getIdentifier("tshirt_red", "drawable", getActivity().getPackageName());
 
-        db.addVestito("red", 1, "maglia rossa", "avorio", 112, R.drawable.ic_tshirt);
-        db.addVestito("yellow", 1, "pantalone", "cacca", 203, R.drawable.pantaloni_sigaretta_tasconi);
+        db.addVestito("red", 1, "maglia rossa", "avorio", 1, R.drawable.ic_tshirt);
+        db.addVestito("yellow", 1, "pantalone", "cacca", 204, R.drawable.pantaloni_sigaretta_tasconi);
         //db.addVestito("arancione", 1, "maglia arancia", "avorio", 1, R.drawable.hoodie_orange);
         //db.addVestito("blu", 1, "pantalone jeans", "cacca", 2, R.drawable.trauser_denim);
         //db.addVestito("blu",1,"maglia verde", "cacca",1, R.drawable.tshirt_denim);
@@ -62,10 +63,14 @@ public class FragmentOne extends Fragment{
         if(id!=null) {
             int i = 0;
             for (Vestito v1 : id) {
-                sb.append(v1.getNome());
+                sb.append(v1.getNome()+" "+v1.getColore());
                 if (i == 0) {
                     int col = view.getContext().getResources().getIdentifier(v1.getColore(), "drawable", getActivity().getPackageName());
-                    int res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                    int res = 0;
+                    if(Integer.parseInt(v1.getTipoVestito())>100)
+                        res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                    else
+                        res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
                     imageView.setImageResource(res);
                     imageView.setColorFilter(col);
                 }

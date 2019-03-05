@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ public class FragmentUp extends Fragment {
     private RecyclerView myRecyclerViewUp;
     private List<Up> lstUp;
     private Vestito vestito;
+    private Button button;
+    private DBAdapterLogin db;
 
     public static final String[] titles = new String[] {"apricot", "ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
             "bottlegreen", "celeste", "coral", "darkGreen", "gold", "gray", "green",
@@ -48,9 +51,15 @@ public class FragmentUp extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.up_fragment, null);
+        final View view = inflater.inflate(R.layout.up_fragment, null);
+
+        button = view.findViewById(R.id.upButtonAdd);
+        vestito = new Vestito();
+        db = new DBAdapterLogin(view.getContext());
 
         vestito = new Vestito();
+        vestito.setNome("Vestito");
+        vestito.setDisponibile("1");
 
         myRecyclerViewUp = (RecyclerView) view.findViewById( R.id.up_recyclerview );
         RecyclerViewAdapterUp recyclerViewAdapterUp = new RecyclerViewAdapterUp( getContext(), lstUp );
@@ -62,6 +71,7 @@ public class FragmentUp extends Fragment {
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
                 vestito.setTipoVestito(Integer.toString(101+position));
+                vestito.setPic_tag(lstUp.get(position).getModelImage());
             }
 
             @Override
@@ -88,6 +98,7 @@ public class FragmentUp extends Fragment {
                 String itemvalue = parent.getItemAtPosition( position ).toString();
                 Toast.makeText( getActivity(), "SELECTED" + itemvalue, Toast.LENGTH_SHORT ).show();
                 vestito.setColore(itemvalue);
+
             }
 
             @Override
@@ -95,6 +106,14 @@ public class FragmentUp extends Fragment {
 
             }
         } );
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.addVestito(vestito.getColore(), Integer.parseInt(vestito.isDisponibile()), vestito.getNome(), "avorio", Integer.parseInt(vestito.getTipoVestito()), vestito.getPic_tag());
+                Toast.makeText(view.getContext(), "vestito aggiunto", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }

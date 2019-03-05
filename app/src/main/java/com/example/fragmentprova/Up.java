@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Up {
 
-    private int upImage;
+    private int modelImage;
     private List<Integer> lstUp = new ArrayList<Integer>();
     private List<Integer> typeUp = new ArrayList<Integer>();
 
@@ -54,14 +54,14 @@ public class Up {
     }
 
     public Up(int upImage) {
-        this.upImage = upImage;
+        this.modelImage = upImage;
     }
 
-    public int getUpImage() {
-        return upImage;
+    public int getModelImage() {
+        return modelImage;
     }
 
-    public void setUpImage(int upImage) {
-        this.upImage = upImage;
+    public void setModelImage(int modelImage) {
+        this.modelImage = modelImage;
     }
 }

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +23,8 @@ public class FragmentTop extends Fragment {
     private RecyclerView myRecyclerView;
     private List<Top> lstTop;
     private Vestito vestito;
+    private Button button;
+    private DBAdapterLogin db;
 
     public static final String[] titles = new String[] {"apricot", "ashGray", "azure", "beige", "black", "blue", "bluegray", "bluejeans",
             "bottlegreen", "celeste", "coral", "darkGreen", "gold", "gray", "green",
@@ -46,7 +50,10 @@ public class FragmentTop extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.top_fragment, null);
+        final View view = inflater.inflate(R.layout.top_fragment, null);
+
+        button = view.findViewById(R.id.topButtonAdd);
+        db = new DBAdapterLogin(view.getContext());
 
         vestito = new Vestito();
         vestito.setNome("Vestito");
@@ -96,6 +103,14 @@ public class FragmentTop extends Fragment {
 
             }
         } );
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.addVestito(vestito.getColore(), Integer.parseInt(vestito.isDisponibile()), vestito.getNome(), "avorio", Integer.parseInt(vestito.getTipoVestito()), vestito.getPic_tag());
+                Toast.makeText(view.getContext(), "vestito aggiunto", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
