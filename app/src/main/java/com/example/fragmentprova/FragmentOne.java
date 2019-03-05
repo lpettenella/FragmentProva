@@ -1,5 +1,6 @@
 package com.example.fragmentprova;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -44,8 +45,8 @@ public class FragmentOne extends Fragment{
 
         int asd = view.getContext().getResources().getIdentifier("tshirt_red", "drawable", getActivity().getPackageName());
 
-        db.addVestito("red", 1, "maglia rossa", "avorio", 1, R.drawable.ic_tshirt);
-        db.addVestito("yellow", 1, "pantalone", "cacca", 204, R.drawable.pantaloni_sigaretta_tasconi);
+        //db.addVestito("red", "#C40233", 1, "maglia rossa", "avorio", 3, R.drawable.ic_tshirt);
+        //db.addVestito("yellow", "#FFD400", 1, "pantalone", "cacca", 201, R.drawable.pantaloni_sigaretta_tasconi);
         //db.addVestito("arancione", 1, "maglia arancia", "avorio", 1, R.drawable.hoodie_orange);
         //db.addVestito("blu", 1, "pantalone jeans", "cacca", 2, R.drawable.trauser_denim);
         //db.addVestito("blu",1,"maglia verde", "cacca",1, R.drawable.tshirt_denim);
@@ -65,24 +66,24 @@ public class FragmentOne extends Fragment{
             for (Vestito v1 : id) {
                 sb.append(v1.getNome()+" "+v1.getColore());
                 if (i == 0) {
-                    int col = view.getContext().getResources().getIdentifier(v1.getColore(), "drawable", getActivity().getPackageName());
                     int res = 0;
                     if(Integer.parseInt(v1.getTipoVestito())>100)
                         res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
                     else
                         res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
                     imageView.setImageResource(res);
-                    imageView.setColorFilter(col);
+                    imageView.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
                 }
                 else if (i == 1) {
-                    int col = view.getContext().getResources().getIdentifier(v1.getColore(), "drawable", getActivity().getPackageName());
                     int res = down.getLstDown().get(down.getTypeDown().indexOf(Integer.parseInt(v1.getTipoVestito())));
                     imageView2.setImageResource(res);
-                    imageView2.setColorFilter(col, PorterDuff.Mode.SRC_ATOP);
+                    imageView2.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                    Toast.makeText(view.getContext(), v1.getColorCode(), Toast.LENGTH_LONG).show();
                 }
+
                 i++;
             }
-            Toast.makeText(view.getContext(), sb, Toast.LENGTH_LONG).show();
+            //Toast.makeText(view.getContext(), sb, Toast.LENGTH_LONG).show();
         }
 
         btnConferma.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +117,6 @@ public class FragmentOne extends Fragment{
             public void onClick(View v) {
                 Fragment fragmentModificaOutfit = new FragmentModificaOutfit();
                 getFragmentManager().beginTransaction().replace(R.id.container, fragmentModificaOutfit).commit();
-                db.addVestito("rosso", 1, "maglia", "avorio", 1, R.drawable.t_shirt_maschio);
-                db.addVestito("giallo", 1, "pantalone", "cacca", 2, R.drawable.pantaloni_sigaretta_tasconi);
             }
         });
 

@@ -46,11 +46,12 @@ public class DBAdapterLogin {
         close();
     }
 
-    void addVestito(String colore, int disponibile, String nome, String tessuto, int tipoVestito_ID, int pic_tag){
+    void addVestito(String colore, String colorCode, int disponibile, String nome, String tessuto, int tipoVestito_ID, int pic_tag){
         open();
 
         ContentValues values = new ContentValues();
         values.put("COLORE", colore);
+        values.put("COLORE_CODE", colorCode);
         values.put("DISPONIBILE", disponibile);
         values.put("NOME", nome);
         values.put("TESSUTO", tessuto);
@@ -177,7 +178,13 @@ public class DBAdapterLogin {
                     }while(cursor4.moveToNext());
                 }
 
-                String selectQuery3 = "SELECT * FROM " + DBHelper.TABLE_VESTITI + " WHERE TIPOVESTITO_ID = ? OR TIPOVESTITO_ID = ?";
+                String selectQuery32 = "SELECT * FROM " + DBHelper.TABLE_VESTITI + " WHERE TIPOVESTITO_ID = ? OR TIPOVESTITO_ID = ? OR TIPOVESTITO_ID = ?";
+                StringBuilder sb = new StringBuilder();
+                sb.append("SELECT * FROM " + DBHelper.TABLE_VESTITI + " WHERE TIPOVESTITO_ID = ? ");
+                for(int i=1; i<sopra.size(); i++){
+                    sb.append("OR TIPOVESTITO_ID = ? ");
+                }
+                String selectQuery3 = sb.toString();
                 String[] sopr = new String[sopra.size()];
                 for(int i=0; i<sopra.size(); i++){
                     sopr[i] = sopra.get(i);
@@ -188,16 +195,17 @@ public class DBAdapterLogin {
                     do {
                         Vestito v = new Vestito();
                         v.setColore(cursor5.getString(1));
-                        v.setDisponibile(cursor5.getString(2));
-                        v.setNome(cursor5.getString(3));
-                        v.setTessuto(cursor5.getString(4));
-                        v.setTipoVestito(cursor5.getString(5));
-                        v.setPic_tag(Integer.parseInt(cursor5.getString(7)));
+                        v.setColorCode(cursor5.getString(2));
+                        v.setDisponibile(cursor5.getString(3));
+                        v.setNome(cursor5.getString(4));
+                        v.setTessuto(cursor5.getString(5));
+                        v.setTipoVestito(cursor5.getString(6));
+                        v.setPic_tag(Integer.parseInt(cursor5.getString(8)));
 
-                        if(sopra.contains(cursor5.getString(5)) && Integer.parseInt(cursor5.getString(5))<200) {
+                        if(sopra.contains(cursor5.getString(6)) && Integer.parseInt(cursor5.getString(6))<200) {
                             parteSopra.add(v);
                         }
-                        else if(sopra.contains(cursor5.getString(5)) && Integer.parseInt(cursor5.getString(5))>=200){
+                        else if(sopra.contains(cursor5.getString(6)) && Integer.parseInt(cursor5.getString(6))>=200){
                             parteSotto.add(v);
                         }
                     } while (cursor5.moveToNext());

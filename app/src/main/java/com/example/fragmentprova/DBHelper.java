@@ -29,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String CREATE_VESTITI_TABLE = "CREATE TABLE " + TABLE_VESTITI + "(" +
             "ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
             "COLORE TEXT," +
+            "COLORE_CODE TEXT," +
             "DISPONIBILE INTEGER," +
             "NOME TEXT," +
             "TESSUTO TEXT," +

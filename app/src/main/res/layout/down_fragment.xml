@@ -75,5 +75,20 @@
         android:layout_marginTop="260dp"
         android:background="?android:attr/listDivider" />
 
-    >
+    <Button
+        android:id="@+id/downButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="430dp"
+        android:text="ADD" />
+
+    <ImageView
+        android:id="@+id/viewDown"
+        android:layout_width="133dp"
+        android:layout_height="133dp"
+        android:layout_alignStart="@+id/downButtonAdd"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-24dp"
+        android:layout_marginTop="286dp" />
 </RelativeLayout>

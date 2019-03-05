@@ -3,6 +3,24 @@ package com.example.fragmentprova;
 public class Vestito {
 
     private String colore;
+    private String colorCode;
+
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public String getIsDisponibile() {
+        return isDisponibile;
+    }
+
+    public void setIsDisponibile(String isDisponibile) {
+        this.isDisponibile = isDisponibile;
+    }
+
     private String isDisponibile;
     private String nome;
     private String tessuto;
