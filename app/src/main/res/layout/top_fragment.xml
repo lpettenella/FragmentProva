@@ -85,11 +85,12 @@
 
     <ImageView
         android:id="@+id/viewTop"
-        android:layout_width="133dp"
-        android:layout_height="133dp"
+        android:layout_width="match_parent"
+        android:layout_height="128dp"
         android:layout_alignStart="@+id/topButtonAdd"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-24dp"
-        android:layout_marginTop="284dp" />
+        android:layout_marginStart="-125dp"
+        android:layout_marginTop="284dp"
+        android:scaleType="fitXY" />
 
 </RelativeLayout>

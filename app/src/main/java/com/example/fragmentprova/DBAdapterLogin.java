@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.fragmentprova.utility.AbbinaColori;
 import com.example.fragmentprova.utility.Preferenze;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -160,6 +161,62 @@ public class DBAdapterLogin {
             } while (cursor.moveToNext()) ;
         }
         return vest;
+    }
+
+    ArrayList<Vestito> getVestitiFatti(String outfit, Preferenze pref){
+
+        ArrayList<ArrayList<Vestito>> outfitFatti = new ArrayList<ArrayList<Vestito>>();
+        int temperatura = 0;
+        open();
+        String selectquery = "SELECT * FROM " + DBHelper.TABLE_OUTFIT + " WHERE ID = ? ";
+        Cursor cursor = database.rawQuery(selectquery, new String[]{outfit});
+        int id_out = 0;
+        if(cursor.moveToFirst()){
+            do{
+                  id_out = Integer.parseInt(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+
+        String selectQuery2 = "SELECT * FROM " + DBHelper.TABLE_OUTFIT + " WHERE NOME = ?";
+        Cursor cursor2 = database.rawQuery(selectquery, new String[]{String.valueOf(id_out)});
+        int id_out_sel = 0;
+        if(cursor.moveToFirst()){
+            do{
+                if(temperatura >= Integer.parseInt(cursor.getString(1)) && temperatura <= Integer.parseInt(cursor.getString(2))) {
+                    id_out_sel = Integer.parseInt(cursor.getString(0));
+                }
+                }while(cursor.moveToNext());
+        }
+
+        ArrayList<String> listaID = new ArrayList<String>();
+
+        String selectQuery3 = "SELECT * FROM " + DBHelper.TABLE_OUTFIT_FATTI + " WHERE ID = ?";
+        Cursor cursor3 = database.rawQuery(selectQuery3, new String[]{String.valueOf(id_out_sel)});
+        if(cursor.moveToFirst()){
+            do{
+                listaID.add(cursor.getString(0));
+            }while(cursor.moveToNext());
+        }
+        //ELSEEEEEEEEEEEEEE
+
+        String[] listaIDA = new String[listaID.size()];
+        for(int i=0; i<listaID.size(); i++){
+            listaIDA[i] = listaID.get(i);
+        }
+
+        ArrayList<ArrayList<String>> lista_id = new ArrayList<ArrayList<String>>();
+        String selectQuery4 = "SELECT * FROM " + DBHelper.TABLE_OUTFITFATTO_VESTITO + " WHERE NOME = ?";
+        Cursor cursor4 = database.rawQuery(selectQuery3, listaIDA);
+
+        if(cursor.moveToFirst()){
+            do{
+
+                outfitFatti.add(nuovoOutfit);
+
+            }while(cursor.moveToNext());
+        }
+
+
     }
 
     ArrayList<Vestito> getVestiti(String outfit, Preferenze prefer){

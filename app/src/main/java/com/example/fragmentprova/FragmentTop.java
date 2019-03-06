@@ -109,7 +109,7 @@ public class FragmentTop extends Fragment {
                 Toast.makeText( getActivity(), "SELECTED" + itemvalue, Toast.LENGTH_SHORT ).show();
                 vestito.setColore(itemvalue);
                 vestito.setColorCode(colores[position]);
-                imageView.setColorFilter(Color.parseColor(colores[position]), PorterDuff.Mode.DARKEN);
+                imageView.setBackgroundColor(Color.parseColor(colores[position]));
             }
 
             @Override
