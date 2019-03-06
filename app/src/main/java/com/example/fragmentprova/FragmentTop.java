@@ -65,6 +65,7 @@ public class FragmentTop extends Fragment {
         db = new DBAdapterLogin(view.getContext());
         imageView = view.findViewById(R.id.viewTop);
 
+
         vestito = new Vestito();
         vestito.setNome("Vestito");
         vestito.setDisponibile("1");

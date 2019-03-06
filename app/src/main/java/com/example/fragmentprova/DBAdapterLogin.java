@@ -1,5 +1,6 @@
 package com.example.fragmentprova;
 
+import android.app.DownloadManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -121,6 +122,44 @@ public class DBAdapterLogin {
         database.insert(DBHelper.TABLE_TIPOVESTITO, null, values);
 
         close();
+    }
+
+    ArrayList<Vestito> getVestiti(String tipo){
+        open();
+        String selectQuery = "SELECT * FROM " + DBHelper.TABLE_VESTITI + " WHERE DISPONIBILE = ? OR DISPONIBILE = ?";
+        Cursor cursor = database.rawQuery(selectQuery, new String[]{"0","1"});
+
+        ArrayList<Vestito> vest = new ArrayList<Vestito>();
+
+        if(cursor.moveToFirst()) {
+            do {
+                Vestito v = new Vestito();
+                v.setColore(cursor.getString(1));
+                v.setColorCode(cursor.getString(2));
+                v.setDisponibile(cursor.getString(3));
+                v.setNome(cursor.getString(4));
+                v.setTessuto(cursor.getString(5));
+                v.setTipoVestito(cursor.getString(6));
+                v.setPic_tag(Integer.parseInt(cursor.getString(8)));
+
+                if (tipo.equals("top")) {
+                    if (Integer.parseInt(v.getTipoVestito()) < 100) {
+                        vest.add(v);
+                    }
+                }
+                if (tipo.equals("up")) {
+                    if (Integer.parseInt(v.getTipoVestito()) > 100 && Integer.parseInt(v.getTipoVestito()) < 200) {
+                        vest.add(v);
+                    }
+                }
+                if (tipo.equals("down")) {
+                    if (Integer.parseInt(v.getTipoVestito()) > 200) {
+                        vest.add(v);
+                    }
+                }
+            } while (cursor.moveToNext()) ;
+        }
+        return vest;
     }
 
     ArrayList<Vestito> getVestiti(String outfit, Preferenze prefer){

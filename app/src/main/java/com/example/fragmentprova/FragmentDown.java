@@ -77,7 +77,6 @@ public class FragmentDown extends Fragment {
             public void onItemClick(View view, int position) {
                 Toast.makeText(view.getContext(),""+position, Toast.LENGTH_SHORT).show();
                 vestito.setTipoVestito(Integer.toString(201+position));
-                vestito.setTipoVestito(Integer.toString(position+1));
                 vestito.setPic_tag(lstDown.get(position).getDownImage());
                 imageView.setImageResource(lstDown.get(position).getDownImage());
 
