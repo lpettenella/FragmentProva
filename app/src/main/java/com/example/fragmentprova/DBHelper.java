@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ")";
 
     public static final String CREATE_OUTFITFATTI_TABLE = "CREATE TABLE `outfitfatto` (" +
-            " `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+            " `ID` INTEGER NOT NULL PRIMARY KEY," +
             " `OUTFITCOLLEGATO_ID` INTEGER )";
 
     public static final String CREATE_OUTFITFATTO_VESTITO = "CREATE TABLE `outfitfatto_vestito` (" +

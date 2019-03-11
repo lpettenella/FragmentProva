@@ -2,6 +2,36 @@ package com.example.fragmentprova;
 
 public class Vestito {
 
+    private String id;
+
+    private Integer selected;
+
+    private Integer posFatto;
+
+    public Integer getPosFatto() {
+        return posFatto;
+    }
+
+    public void setPosFatto(Integer posFatto) {
+        this.posFatto = posFatto;
+    }
+
+    public Integer getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Integer selected) {
+        this.selected = selected;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     private String colore;
     private String colorCode;
 

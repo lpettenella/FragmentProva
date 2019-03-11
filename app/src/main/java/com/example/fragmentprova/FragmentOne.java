@@ -30,18 +30,27 @@ public class FragmentOne extends Fragment{
     ImageButton btnModifica;
     ImageButton btnCrea;
     ImageButton btnArmadio;
+    DBAdapterLogin db;
+    ArrayList<Vestito> selectedOutfit;
+    ArrayList<Integer> posFatto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_one, container, false);
-        final DBAdapterLogin db = new DBAdapterLogin(view.getContext());
+        db = new DBAdapterLogin(view.getContext());
         final Preferenze pref = new Preferenze();
         final Up up = new Up();
         final Down down = new Down();
         final Top top = new Top();
+        posFatto = new ArrayList<>();
+        selectedOutfit = new ArrayList<>();
 
         imageView = view.findViewById(R.id.imageView);
         imageView2 = view.findViewById(R.id.imageView2);
+
+        if(posFatto.size() >= 5){
+            posFatto.clear();
+        }
 
         int asd = view.getContext().getResources().getIdentifier("tshirt_red", "drawable", getActivity().getPackageName());
 
@@ -59,56 +68,79 @@ public class FragmentOne extends Fragment{
         btnCrea = view.findViewById(R.id.btnCrea);
         btnArmadio = view.findViewById(R.id.btnArmadio);
 
-        ArrayList<Vestito> id = db.getVestiti("InvernaleFeriale", pref);
+        //ArrayList<Vestito> ads = db.getVestiti("InvernaleFeriale", pref);
+        ArrayList<Vestito> id = db.getVestitiFatti("InvernaleFeriale", pref, posFatto);
+        posFatto.add(id.get(0).getPosFatto());
         StringBuilder sb = new StringBuilder();
-        if(id!=null) {
-            int i = 0;
-            for (Vestito v1 : id) {
-                sb.append(v1.getNome()+" "+v1.getColore());
-                if (i == 0) {
-                    int res = 0;
-                    if(Integer.parseInt(v1.getTipoVestito())>100)
-                        res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
-                    else
-                        res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
-                    imageView.setImageResource(res);
-                    imageView.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
-                }
-                else if (i == 1) {
-                    int res = down.getLstDown().get(down.getTypeDown().indexOf(Integer.parseInt(v1.getTipoVestito())));
-                    imageView2.setImageResource(res);
-                    imageView2.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
-                    Toast.makeText(view.getContext(), v1.getColorCode(), Toast.LENGTH_LONG).show();
-                }
 
-                i++;
+            for(Vestito v: id){
+                Toast.makeText(getContext(), sb.append(v.getId())+ " ", Toast.LENGTH_SHORT).show();
             }
-            //Toast.makeText(view.getContext(), sb, Toast.LENGTH_LONG).show();
+            if(id!=null) {
+                int i = 0;
+                for (Vestito v1 : id) {
+
+                    int res = 0;
+                    if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                        res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+
+                    else if(Integer.parseInt(v1.getTipoVestito())<100) {
+                        res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                        imageView.setImageResource(res);
+                        imageView.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                    }
+
+                    else {
+                        res = down.getLstDown().get(down.getTypeDown().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                        imageView2.setImageResource(res);
+                        imageView2.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                    }
+                }
         }
 
         btnConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnConferma.setBackgroundResource(R.mipmap.rifiuta);
-                pref.setEccentric(true);
+                if (selectedOutfit!=null)
+                    db.addOutfitFatto(selectedOutfit.get(0).getSelected(), selectedOutfit);
+                Toast.makeText(getContext(), "Outfit SCELTO", Toast.LENGTH_SHORT).show();
             }
         });
 
         btnRifiuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Vestito> id = db.getVestiti("InvernaleFeriale", pref);
+                if(posFatto.size() >= db.getoutfitFattiCount()-1){
+                    posFatto.clear();
+                }
+                ArrayList<Vestito> id = db.getVestitiFatti("InvernaleFeriale", pref, posFatto);
+                posFatto.add(id.get(0).getPosFatto());
                 StringBuilder sb = new StringBuilder();
+
+                for(Vestito v1: id){
+                    Toast.makeText(getContext(), sb.append(v1.getId())+ " ", Toast.LENGTH_SHORT).show();
+                }
                 if(id!=null) {
                     for (Vestito v1 : id) {
-                        sb.append(v1.getNome());
-                        if (v1.getTipoVestito().equals("1"))
-                            imageView.setImageResource(v1.getPic_tag());
-                        else if (v1.getTipoVestito().equals("2"))
-                            imageView2.setImageResource(v1.getPic_tag());
+
+                        int res = 0;
+                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                            res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+
+                        else if(Integer.parseInt(v1.getTipoVestito())<100) {
+                            res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView.setImageResource(res);
+                            imageView.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
+
+                        else {
+                            res = down.getLstDown().get(down.getTypeDown().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView2.setImageResource(res);
+                            imageView2.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
                     }
-                    Toast.makeText(view.getContext(), sb, Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 
@@ -123,8 +155,31 @@ public class FragmentOne extends Fragment{
         btnCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragmentAddOutfit = new FragmentAddOutfit();
-                getFragmentManager().beginTransaction().replace(R.id.container, fragmentAddOutfit).commit();
+
+                ArrayList<Vestito> id = db.getVestiti("InvernaleFeriale", pref);
+                StringBuilder sb = new StringBuilder();
+                if(id!=null) {
+                    int i = 0;
+                    for (Vestito v1 : id) {
+
+                        int res = 0;
+                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                            res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+
+                        else if(Integer.parseInt(v1.getTipoVestito())<100) {
+                            res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView.setImageResource(res);
+                            imageView.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
+
+                        else {
+                            res = down.getLstDown().get(down.getTypeDown().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView2.setImageResource(res);
+                            imageView2.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
+                    }
+                }
+                selectedOutfit = id;
             }
         });
 
