@@ -1,8 +1,10 @@
 package com.example.fragmentprova;
 
+import android.content.ContentResolver;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.example.fragmentprova.Up;
 
 import com.example.fragmentprova.utility.Preferenze;
+import com.example.fragmentprova.utility.StagioneOutfit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +28,7 @@ public class FragmentOne extends Fragment{
 
     ImageView imageView;
     ImageView imageView2;
+    ImageView imageView3;
     ImageButton btnConferma;
     ImageButton btnRifiuta;
     ImageButton btnModifica;
@@ -44,18 +48,17 @@ public class FragmentOne extends Fragment{
         final Top top = new Top();
         posFatto = new ArrayList<>();
         selectedOutfit = new ArrayList<>();
+        final String stagione = new StagioneOutfit().getStagione();
 
         imageView = view.findViewById(R.id.imageView);
         imageView2 = view.findViewById(R.id.imageView2);
-
-        if(posFatto.size() >= 5){
-            posFatto.clear();
-        }
+        imageView3 = view.findViewById(R.id.imageView4);
 
         int asd = view.getContext().getResources().getIdentifier("tshirt_red", "drawable", getActivity().getPackageName());
 
         //db.addVestito("red", "#C40233", 1, "maglia rossa", "avorio", 3, R.drawable.ic_tshirt);
         //db.addVestito("yellow", "#FFD400", 1, "pantalone", "cacca", 201, R.drawable.pantaloni_sigaretta_tasconi);
+        //db.addVestito("yellow", "#FFD400", 1, "intimo", "cacca", 111, R.drawable.pantaloni_sigaretta_tasconi);
         //db.addVestito("arancione", 1, "maglia arancia", "avorio", 1, R.drawable.hoodie_orange);
         //db.addVestito("blu", 1, "pantalone jeans", "cacca", 2, R.drawable.trauser_denim);
         //db.addVestito("blu",1,"maglia verde", "cacca",1, R.drawable.tshirt_denim);
@@ -68,8 +71,7 @@ public class FragmentOne extends Fragment{
         btnCrea = view.findViewById(R.id.btnCrea);
         btnArmadio = view.findViewById(R.id.btnArmadio);
 
-        //ArrayList<Vestito> ads = db.getVestiti("InvernaleFeriale", pref);
-        ArrayList<Vestito> id = db.getVestitiFatti("InvernaleFeriale", pref, posFatto);
+        ArrayList<Vestito> id = db.getVestitiFatti(stagione+"Feriale", pref, posFatto);
         posFatto.add(id.get(0).getPosFatto());
         StringBuilder sb = new StringBuilder();
 
@@ -77,12 +79,14 @@ public class FragmentOne extends Fragment{
                 Toast.makeText(getContext(), sb.append(v.getId())+ " ", Toast.LENGTH_SHORT).show();
             }
             if(id!=null) {
-                int i = 0;
                 for (Vestito v1 : id) {
 
                     int res = 0;
-                    if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                    if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200) {
                         res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                        imageView3.setImageResource(res);
+                        imageView3.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                    }
 
                     else if(Integer.parseInt(v1.getTipoVestito())<100) {
                         res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
@@ -97,7 +101,6 @@ public class FragmentOne extends Fragment{
                     }
                 }
         }
-
         btnConferma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +116,7 @@ public class FragmentOne extends Fragment{
                 if(posFatto.size() >= db.getoutfitFattiCount()-1){
                     posFatto.clear();
                 }
-                ArrayList<Vestito> id = db.getVestitiFatti("InvernaleFeriale", pref, posFatto);
+                ArrayList<Vestito> id = db.getVestitiFatti(stagione+"Feriale", pref, posFatto);
                 posFatto.add(id.get(0).getPosFatto());
                 StringBuilder sb = new StringBuilder();
 
@@ -124,8 +127,11 @@ public class FragmentOne extends Fragment{
                     for (Vestito v1 : id) {
 
                         int res = 0;
-                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200) {
                             res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView3.setImageResource(res);
+                            imageView3.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
 
                         else if(Integer.parseInt(v1.getTipoVestito())<100) {
                             res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));
@@ -156,15 +162,18 @@ public class FragmentOne extends Fragment{
             @Override
             public void onClick(View v) {
 
-                ArrayList<Vestito> id = db.getVestiti("InvernaleFeriale", pref);
+                ArrayList<Vestito> id = db.getVestiti(stagione+"Feriale", pref);
                 StringBuilder sb = new StringBuilder();
                 if(id!=null) {
                     int i = 0;
                     for (Vestito v1 : id) {
 
                         int res = 0;
-                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200)
+                        if(Integer.parseInt(v1.getTipoVestito())>100 && Integer.parseInt(v1.getTipoVestito()) < 200) {
                             res = up.getLstUp().get(up.getTypeUp().indexOf(Integer.parseInt(v1.getTipoVestito())));
+                            imageView3.setImageResource(res);
+                            imageView3.setColorFilter(Color.parseColor(v1.getColorCode()), PorterDuff.Mode.DARKEN);
+                        }
 
                         else if(Integer.parseInt(v1.getTipoVestito())<100) {
                             res = top.getLstTop().get(top.getTypeTop().indexOf(Integer.parseInt(v1.getTipoVestito())));

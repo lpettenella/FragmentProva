@@ -24,7 +24,7 @@ public class Popolamento {
         db.addTipoOutfit(1, 2, "Completo", null, null);
         int[] i = {1};
         int[] tv1 = {3, 4, 5, 6, 7, 8, 201};
-        int[] tv2 = {3};
+        int[] tv2 = {111};
         db.addTipoOutfit(2, 2, "Sopra", i, tv1);
         db.addTipoOutfit(3, 2, "Intimo", i, tv2);
     }
